@@ -4,41 +4,69 @@
 ## PRE INSTALLATION ##
 ## # # # ## # # # # ##
 
+# Make Automation For Disk Selection, Format and SELF PARTITION - EFI, SWAP, ROOT
+
 loadkeys us
 setfont ter-132b
 
-pacman -Syy
-
-timedatectl set-timezone Asia/Kolkata
+# timedatectl set-timezone Asia/Kolkata
 timedatectl set-ntp true
 
-lsblk
+# Pacman Conf
+pacman -Syy
+sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
+pacman --noconfirm -S reflector pacman-contrib archlinux-keyring
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+sudo reflector -c "India" -p https -a 4 --sort rate --save /etc/pacman.d/mirrorlist
+pacman -Syy
+
 # READ Partitions Here For EFI, SWAP, ROOT
+lsblk
 
 read -p "EFI Partition   |  nvme0n1p1 / sda1 / vda1 :   " EFI
 read -p "SWAP Partition  |  nvme0n1p2 / sda2 / vda2 :   " SWAP
 read -p "Root Partition  |  nvme0n1p3 / sda3 / vda3 :   " ROOT
 
+# Format Partitions
 mkfs.fat -F 32 /dev/$EFI
 mkswap /dev/$SWAP
 mkfs.btrfs -f /dev/$ROOT
 
+# Mount ROOT and Creating SUBVOLUMES
 mount /dev/$ROOT /mnt
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
+btrfs subvolume create /mnt/@cache
+btrfs subvolume create /mnt/@log
+btrfs subvolume create /mnt/@snapshots
 umount /mnt
 
+# Mounting Each SUBVOLUMES with ZSTD Compression
 mount -o compress=zstd:1,noatime,subvol=@ /dev/$ROOT /mnt
 
 mkdir /mnt/home
 mount -o compress=zstd:1,noatime,subvol=@home /dev/$ROOT /mnt/home
+
+mkdir -p /mnt/var/cache
+mount -o compress=zstd:1,noatime,subvol=@cache /dev/$ROOT /mnt/var/cache
+
+mkdir -p /mnt/var/log
+mount -o compress=zstd:1,noatime,subvol=@log /dev/$ROOT /mnt/var/log
+
+mkdir /mnt/.snapshots
+mount -o compress=zstd:1,noatime,subvol=@snapshots /dev/$ROOT /mnt/.snapshots
+
+# Mounting EFI
 mkdir -p /mnt/boot/efi
 mount /dev/$EFI /mnt/boot/efi
 
+# SWAP ON
 swapon /dev/$SWAP
 
+# BASE LINUX PACKAGES
 pacstrap -K /mnt base base-devel linux linux-firmware intel-ucode amd-ucode btrfs-progs
 
+# Generating FSTAB
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # # # # # # # # # # #
@@ -51,6 +79,7 @@ cp config.sh /mnt/archinstall
 arch-chroot /mnt ./archinstall/config.sh
 
 cd ~
+rm -rf /mnt/archinstall
 umount -R /mnt
 
-reboot
+echo "Installation Completed. You can reboot now."

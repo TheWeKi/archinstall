@@ -8,14 +8,10 @@ username="weki"
 ln -sf /usr/share/zoneinfo/$zoneinfo /etc/localtime
 hwclock --systohc
 
-pacman --noconfirm -S reflector
-
-reflector -c "India," -p https -a 3 --sort rate --save /etc/pacman.d/mirrorlist
-pacman -Syy
-
 pacman --noconfirm -S grub efibootmgr linux-headers grub-btrfs networkmanager nano vim xdg-utils xorg-server git
 
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+# echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 
@@ -47,11 +43,12 @@ systemctl enable fstrim.timer
 # sed -i 's/BINARIES=()/BINARIES=(btrfs setfont)/g' /etc/mkinitcpio.conf
 # mkinitcpio -p linux
 
-echo "Uncomment %wheel group in sudoers (around line 85):"
-echo "Before: #%wheel ALL=(ALL:ALL) ALL"
-echo "After:  %wheel ALL=(ALL:ALL) ALL"
-echo ""
-read -p "Open sudoers now?" c
-EDITOR=vim sudo -E visudo
+# echo "Uncomment %wheel group in sudoers (around line 85):"
+# echo "Before: #%wheel ALL=(ALL:ALL) ALL"
+# echo "After:  %wheel ALL=(ALL:ALL) ALL"
+# echo ""
+# read -p "Open sudoers now?" c
+# EDITOR=vim sudo -E visudo
 
+sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 usermod -aG wheel $username
