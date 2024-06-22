@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+keyboardlayout="us"
+zoneinfo="Asia/Kolkata"
+hostname="localhost"
+username="weki"
+
 ln -sf /usr/share/zoneinfo/$zoneinfo /etc/localtime
 hwclock --systohc
 
@@ -8,7 +13,7 @@ pacman --noconfirm -S reflector
 reflector -c "India," -p https -a 3 --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Syy
 
-pacman --noconfirm -S grub efibootmgr linux-headers grub-btrfs sof-firmware wireplumber pipewire pipewire-alsa pipewire-jack pipewire-pulse networkmanager network-manager-applet wireless_tools wpa_supplicant dialog cups bluez bluez-utils bluez-cups blueman nano vim openssh htop wget xdg-utils rsync xorg-server xorg-xinit git
+pacman --noconfirm -S grub efibootmgr linux-headers grub-btrfs networkmanager nano vim xdg-utils xorg-server git
 
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
@@ -33,9 +38,9 @@ echo "Enter User Password: "
 passwd $username
 
 systemctl enable NetworkManager
-systemctl enable bluetooth
-systemctl enable cups.service
-systemctl enable sshd
+# systemctl enable bluetooth
+# systemctl enable cups.service
+# systemctl enable sshd
 systemctl enable reflector.timer
 systemctl enable fstrim.timer
 
@@ -49,4 +54,4 @@ echo ""
 read -p "Open sudoers now?" c
 EDITOR=vim sudo -E visudo
 
-usermod -aG wheel weki
+usermod -aG wheel $username
