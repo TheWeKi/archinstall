@@ -75,25 +75,13 @@ genfstab -U /mnt >> /mnt/etc/fstab
 mkdir /mnt/archinstall
 cp test-conf.sh /mnt/archinstall
 
-arch-chroot /mnt ./archinstall/test-conf.sh
-
-echo "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-echo "CHROOT WORK COMPLETED"
-echo "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-sleep 5
-
 cd /root
 
-echo "Removing /mnt/archinstall !!!"
+arch-chroot /mnt ./archinstall/test-conf.sh
+
 rm -rf /mnt/archinstall
-sleep 2
-
-echo "Unmounting /mnt"
 umount -R /mnt
-sleep 2
 
-echo "Removing /root/archinstall !!!"
 rm -rf /root/archinstall
-sleep 2
 
 echo "Installation Completed. You can reboot now."
