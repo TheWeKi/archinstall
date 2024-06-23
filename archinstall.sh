@@ -55,18 +55,13 @@ mount /dev/$EFI /mnt/boot/efi
 # SWAP ON
 swapon /dev/$SWAP
 
-
 # Pacman Conf
-# pacman -Syy
-# pacstrap -K /mnt reflector
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 reflector -c "India" -p https -a 4 --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Syy
 
-
 # BASE LINUX PACKAGES
 pacstrap -K /mnt base linux linux-firmware
-# base-devel intel-ucode amd-ucode btrfs-progs
 
 # Generating FSTAB
 genfstab -U /mnt >> /mnt/etc/fstab

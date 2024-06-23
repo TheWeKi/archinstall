@@ -33,7 +33,7 @@ pacman --noconfirm -S btrfs-progs e2fsprogs
 pacman --noconfirm -S mesa vulkan-radeon vulkan-intel vulkan-nouveau xf86-video-amdgpu xf86-video-ati xf86-video-intel xf86-video-nouveau xf86-video-vmware intel-media-driver libva-intel-driver libva-mesa-driver
 
 # Bootloader
-pacman --noconfirm -S grub efibootmgr
+pacman --noconfirm -S grub efibootmgr os-prober grub-btrfs
 
 # Network
 pacman --noconfirm -S networkmanager network-manager-applet
@@ -68,9 +68,9 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Set Root Password"
-passwd root
+passwd
 
-useradd -m -G wheel $username
+useradd -m $username
 echo "Enter User Password: "
 passwd $username
 
@@ -81,16 +81,11 @@ systemctl enable cups.service
 systemctl enable reflector.timer
 systemctl enable fstrim.timer
 
-# sed -i 's/BINARIES=()/BINARIES=(btrfs setfont)/g' /etc/mkinitcpio.conf
-# mkinitcpio -p linux
+# Corruption recovery -> btrfs-check
+sed -i 's/BINARIES=()/BINARIES=(btrfs)/g' /etc/mkinitcpio.conf
+mkinitcpio -p linux
 
-# echo "Uncomment %wheel group in sudoers (around line 85):"
-# echo "Before: #%wheel ALL=(ALL:ALL) ALL"
-# echo "After:  %wheel ALL=(ALL:ALL) ALL"
-# echo ""
-# read -p "Open sudoers now?" c
-# EDITOR=vim sudo -E visudo
-
+# Enable Sudoers permission for wheel group and Add User to wheel group
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 usermod -aG wheel $username
 
@@ -98,3 +93,4 @@ usermod -aG wheel $username
 ## OTHER CONFIGURATIONS ##
 ##########################
 
+pacman --noconfirm -S git
