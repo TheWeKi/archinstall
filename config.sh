@@ -94,3 +94,4 @@ usermod -aG wheel $username
 ##########################
 
 pacman --noconfirm -S git
+
