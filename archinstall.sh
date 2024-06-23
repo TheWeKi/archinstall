@@ -9,16 +9,8 @@
 loadkeys us
 setfont ter-132b
 
-# timedatectl set-timezone Asia/Kolkata
+timedatectl set-timezone Asia/Kolkata
 timedatectl set-ntp true
-
-# Pacman Conf
-pacman -Syy
-sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
-pacman --noconfirm -S reflector pacman-contrib archlinux-keyring
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-sudo reflector -c "India" -p https -a 4 --sort rate --save /etc/pacman.d/mirrorlist
-pacman -Syy
 
 # READ Partitions Here For EFI, SWAP, ROOT
 lsblk
@@ -63,8 +55,18 @@ mount /dev/$EFI /mnt/boot/efi
 # SWAP ON
 swapon /dev/$SWAP
 
+
+# Pacman Conf
+# pacman -Syy
+# pacstrap -K /mnt reflector
+sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
+reflector -c "India" -p https -a 4 --sort rate --save /etc/pacman.d/mirrorlist
+pacman -Syy
+
+
 # BASE LINUX PACKAGES
-pacstrap -K /mnt base base-devel linux linux-firmware intel-ucode amd-ucode btrfs-progs
+pacstrap -K /mnt base linux linux-firmware
+# base-devel intel-ucode amd-ucode btrfs-progs
 
 # Generating FSTAB
 genfstab -U /mnt >> /mnt/etc/fstab

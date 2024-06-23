@@ -8,7 +8,7 @@ username="weki"
 ln -sf /usr/share/zoneinfo/$zoneinfo /etc/localtime
 hwclock --systohc
 
-pacman --noconfirm -S grub efibootmgr linux-headers grub-btrfs networkmanager nano vim xdg-utils xorg-server git
+pacman --noconfirm -S base-devel intel-ucode amd-ucode btrfs-progs grub efibootmgr linux-headers grub-btrfs networkmanager nano vim xorg-server git
 
 # echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
@@ -38,7 +38,7 @@ systemctl enable NetworkManager
 # systemctl enable cups.service
 # systemctl enable sshd
 systemctl enable reflector.timer
-systemctl enable fstrim.timer
+# systemctl enable fstrim.timer
 
 # sed -i 's/BINARIES=()/BINARIES=(btrfs setfont)/g' /etc/mkinitcpio.conf
 # mkinitcpio -p linux
