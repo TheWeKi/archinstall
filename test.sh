@@ -82,9 +82,18 @@ echo "CHROOT WORK COMPLETED"
 echo "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
 sleep 5
 
-rm -rf /mnt/archinstall
-umount -R /mnt
+cd /root
 
-cd ~
+echo "Removing /mnt/archinstall !!!"
+rm -rf /mnt/archinstall
+sleep 2
+
+echo "Unmounting /mnt"
+umount -R /mnt
+sleep 2
+
+echo "Removing /root/archinstall !!!"
+rm -rf /root/archinstall
+sleep 2
 
 echo "Installation Completed. You can reboot now."
