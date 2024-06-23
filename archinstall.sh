@@ -75,8 +75,9 @@ cp config.sh /mnt/archinstall
 
 arch-chroot /mnt ./archinstall/config.sh
 
-cd ~
 rm -rf /mnt/archinstall
 umount -R /mnt
+
+cd ~
 
 echo "Installation Completed. You can reboot now."

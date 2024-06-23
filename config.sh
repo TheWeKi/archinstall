@@ -30,7 +30,7 @@ pacman --nocinfirm -S xorg-server xorg-xinit
 pacman --noconfirm -S btrfs-progs e2fsprogs
 
 # Graphic Drivers
-pacman --noconfirm -S mesa vulkan-radeon vulkan-intel vulkan-nouveau xf86-video-amdgpu xf86-video-ati xf86-video-intel xf86-video-nouveau xf86-video-vmware intel-media-driver libva-intel-driver libva-mesa-driver
+# pacman --noconfirm -S mesa vulkan-radeon vulkan-intel vulkan-nouveau xf86-video-amdgpu xf86-video-ati xf86-video-intel xf86-video-nouveau xf86-video-vmware intel-media-driver libva-intel-driver libva-mesa-driver
 
 # Bootloader
 pacman --noconfirm -S grub efibootmgr os-prober grub-btrfs
@@ -48,7 +48,7 @@ pacman --noconfirm -S cups
 pacman --noconfirm -S wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire pavucontrol
 
 # Others
-pacman --noconfirm -S man nano
+pacman --noconfirm -S base-devel man nano
 
 
 # echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
