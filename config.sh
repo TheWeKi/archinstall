@@ -17,6 +17,14 @@ pacman --noconfirm -S reflector
 reflector -c "India" -p https -a 7 --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Syy
 
+#chaotic-aur setup
+pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+pacman-key --lsign-key 3056513887B78AEB
+pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+echo -e "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | tee -a /etc/pacman.conf
+pacman -Syy
+
 # Microcodes
 pacman --noconfirm -S intel-ucode amd-ucode
 
@@ -93,4 +101,6 @@ usermod -aG wheel $username
 ## OTHER CONFIGURATIONS ##
 ##########################
 
-pacman --noconfirm -S git
+pacman --noconfirm -S git zsh
+
+chsh -s $(which zsh) $username
