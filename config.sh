@@ -56,7 +56,7 @@ sshd.service
 pacman --noconfirm -S wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire pavucontrol
 
 # Others
-pacman --noconfirm -S base-devel man nano git openssh ttf-jetbrains-mono-nerd
+pacman --noconfirm -S base-devel man nano git openssh ttf-jetbrains-mono-nerd grim slurp
 
 
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
