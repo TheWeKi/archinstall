@@ -72,12 +72,12 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 mkdir /mnt/archinstall
 cp config.sh /mnt/archinstall
-cp desktop.sh /mnt/archinstall
-cp hyprland.sh /mnt/archinstall
+# cp gnome.sh /mnt/archinstall
+# cp hyprland.sh /mnt/archinstall
 
 arch-chroot /mnt ./archinstall/config.sh
-# arch-chroot /mnt ./archinstall/desktop.sh
-arch-chroot /mnt ./archinstall/hyprland.sh
+# arch-chroot /mnt ./archinstall/gnome.sh
+# arch-chroot /mnt ./archinstall/hyprland.sh
 
 rm -rf /mnt/archinstall
 umount -R /mnt

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pacman -S gdm gnome gnome-extra
+pacman --noconfirm -S gdm gnome gnome-extra
 
 sleep 1
 
