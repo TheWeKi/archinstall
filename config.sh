@@ -37,9 +37,6 @@ pacman --nocinfirm -S xorg-server xorg-xinit
 # File System
 pacman --noconfirm -S btrfs-progs e2fsprogs
 
-# Graphic Drivers
-# pacman --noconfirm -S mesa vulkan-radeon vulkan-intel vulkan-nouveau xf86-video-amdgpu xf86-video-ati xf86-video-intel xf86-video-nouveau xf86-video-vmware intel-media-driver libva-intel-driver libva-mesa-driver
-
 # Bootloader
 pacman --noconfirm -S grub efibootmgr os-prober grub-btrfs
 
@@ -51,12 +48,12 @@ pacman --noconfirm -S bluez bluez-utils blueman
 
 # Printer
 pacman --noconfirm -S cups
-sshd.service
+
 # Audio
 pacman --noconfirm -S wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire pavucontrol
 
 # Others
-pacman --noconfirm -S base-devel man nano git openssh ttf-jetbrains-mono-nerd grim slurp
+pacman --noconfirm -S base-devel linux-headers man nano vim git openssh pacman-contrib grim slurp htop fastfetch
 
 
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
@@ -85,9 +82,10 @@ passwd $username
 systemctl enable NetworkManager.service
 systemctl enable bluetooth.service
 systemctl enable cups.service
+systemctl enable sshd.service
 systemctl enable reflector.timer
 systemctl enable fstrim.timer
-systemctl enable sshd.service
+systemctl enable paccache.timer
 
 # Corruption recovery -> btrfs-check
 sed -i 's/BINARIES=()/BINARIES=(btrfs)/g' /etc/mkinitcpio.conf
@@ -104,3 +102,6 @@ usermod -aG wheel $username
 # Shell
 pacman --noconfirm -S zsh
 chsh -s $(which zsh) $username
+
+# Appearance
+pacman --noconfirm -S ttf-jetbrains-mono-nerd
