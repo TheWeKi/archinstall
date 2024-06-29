@@ -51,15 +51,14 @@ pacman --noconfirm -S bluez bluez-utils blueman
 
 # Printer
 pacman --noconfirm -S cups
-
+sshd.service
 # Audio
 pacman --noconfirm -S wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire pavucontrol
 
 # Others
-pacman --noconfirm -S base-devel man nano
+pacman --noconfirm -S base-devel man nano git openssh ttf-jetbrains-mono-nerd
 
 
-# echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
@@ -88,6 +87,7 @@ systemctl enable bluetooth.service
 systemctl enable cups.service
 systemctl enable reflector.timer
 systemctl enable fstrim.timer
+systemctl enable sshd.service
 
 # Corruption recovery -> btrfs-check
 sed -i 's/BINARIES=()/BINARIES=(btrfs)/g' /etc/mkinitcpio.conf
@@ -101,6 +101,6 @@ usermod -aG wheel $username
 ## OTHER CONFIGURATIONS ##
 ##########################
 
-pacman --noconfirm -S git zsh
-
+# Shell
+pacman --noconfirm -S zsh
 chsh -s $(which zsh) $username
