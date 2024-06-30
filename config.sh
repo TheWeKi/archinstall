@@ -26,7 +26,7 @@ echo -e "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | tee -a /et
 pacman -Syy
 
 # Other Packages
-pacman --noconfirm -S grub efibootmgr os-prober grub-btrfs wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire
+pacman --noconfirm -S grub efibootmgr os-prober grub-btrfs wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire bluez bluez-utils
 
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
@@ -52,6 +52,7 @@ passwd $username
 
 # Start Services
 systemctl enable NetworkManager.service
+systemctl enable bluetooth.service
 systemctl enable cups.socket
 systemctl enable reflector.timer
 systemctl enable fstrim.timer
