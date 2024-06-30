@@ -25,36 +25,8 @@ pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorl
 echo -e "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | tee -a /etc/pacman.conf
 pacman -Syy
 
-# Microcodes
-pacman --noconfirm -S intel-ucode amd-ucode
-
-# Firmware
-pacman --noconfirm -S sof-firmware linux-firmware-marvell
-
-# Server
-pacman --nocinfirm -S xorg-server xorg-xinit
-
-# File System
-pacman --noconfirm -S btrfs-progs e2fsprogs
-
-# Bootloader
-pacman --noconfirm -S grub efibootmgr os-prober grub-btrfs
-
-# Network
-pacman --noconfirm -S networkmanager network-manager-applet
-
-# Bluetooth
-pacman --noconfirm -S bluez bluez-utils blueman
-
-# Printer
-pacman --noconfirm -S cups
-
-# Audio
-pacman --noconfirm -S wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire pavucontrol
-
-# Others
-pacman --noconfirm -S base-devel linux-headers man nano vim git openssh pacman-contrib grim slurp htop fastfetch
-
+# Other Packages
+pacman --noconfirm -S grub efibootmgr os-prober grub-btrfs wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire
 
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
@@ -80,9 +52,7 @@ passwd $username
 
 # Start Services
 systemctl enable NetworkManager.service
-systemctl enable bluetooth.service
-systemctl enable cups.service
-systemctl enable sshd.service
+systemctl enable cups.socket
 systemctl enable reflector.timer
 systemctl enable fstrim.timer
 systemctl enable paccache.timer
@@ -94,14 +64,3 @@ mkinitcpio -p linux
 # Enable Sudoers permission for wheel group and Add User to wheel group
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 usermod -aG wheel $username
-
-##########################
-## OTHER CONFIGURATIONS ##
-##########################
-
-# Shell
-pacman --noconfirm -S zsh
-chsh -s $(which zsh) $username
-
-# Appearance
-pacman --noconfirm -S ttf-jetbrains-mono-nerd

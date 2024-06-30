@@ -61,7 +61,7 @@ reflector -c "India" -p https -a 4 --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Syy
 
 # BASE LINUX PACKAGES
-pacstrap -K /mnt base linux linux-firmware
+pacstrap -K /mnt base linux linux-firmware intel-ucode amd-ucode sof-firmware linux-firmware-marvell xorg-server xorg-xinit btrfs-progs e2fsprogs networkmanager cups base-devel linux-headers man nano vim git openssh pacman-contrib
 
 # Generating FSTAB
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -72,12 +72,12 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 mkdir /mnt/archinstall
 cp config.sh /mnt/archinstall
-# cp gnome.sh /mnt/archinstall
-cp hyprland.sh /mnt/archinstall
+cp gnome.sh /mnt/archinstall
+# cp hyprland.sh /mnt/archinstall
 
 arch-chroot /mnt ./archinstall/config.sh
-# arch-chroot /mnt ./archinstall/gnome.sh
-arch-chroot /mnt ./archinstall/hyprland.sh
+arch-chroot /mnt ./archinstall/gnome.sh
+# arch-chroot /mnt ./archinstall/hyprland.sh
 
 rm -rf /mnt/archinstall
 umount -R /mnt
