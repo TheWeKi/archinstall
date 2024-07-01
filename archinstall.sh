@@ -61,7 +61,7 @@ reflector -c "India" -p https -a 4 --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Syy
 
 # BASE LINUX PACKAGES - amd-ucode if using amd processor
-pacstrap -K /mnt base linux linux-firmware intel-ucode sof-firmware linux-firmware-marvell xorg-server xorg-xinit btrfs-progs e2fsprogs networkmanager cups base-devel linux-headers man nano vim git openssh pacman-contrib
+pacstrap -K /mnt base base-devel linux linux-firmware linux-headers pacman-contrib intel-ucode btrfs-progs e2fsprogs dosfstools exfatprogs sof-firmware linux-firmware-marvell networkmanager modemmanager usb_modeswitch nano man-db
 
 # Generating FSTAB
 genfstab -U /mnt >> /mnt/etc/fstab

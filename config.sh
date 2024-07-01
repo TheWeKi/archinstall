@@ -2,7 +2,7 @@
 
 keyboardlayout="us"
 zoneinfo="Asia/Kolkata"
-hostname="localhost"
+hostname="archlinux"
 username="weki"
 
 ln -sf /usr/share/zoneinfo/$zoneinfo /etc/localtime
@@ -26,7 +26,7 @@ echo -e "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | tee -a /et
 pacman -Syy
 
 # Other Packages
-pacman --noconfirm -S grub efibootmgr os-prober grub-btrfs wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire bluez bluez-utils bash-completion
+pacman --noconfirm -S grub efibootmgr grub-btrfs wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire bluez bluez-utils bash-completion openssh thermald firewalld plocate
 
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
@@ -52,11 +52,16 @@ passwd $username
 
 # Start Services
 systemctl enable NetworkManager.service
+systemctl enable ModemManager.service
 systemctl enable bluetooth.service
-systemctl enable cups.socket
-systemctl enable reflector.timer
-systemctl enable fstrim.timer
+systemctl enable sshd.service
+systemctl enable thermald.service
+systemctl enable firewalld.service
+
 systemctl enable paccache.timer
+systemctl enable fstrim.timer
+systemctl enable reflector.timer
+systemctl enable plocate-updatedb.timer
 
 # Corruption recovery -> btrfs-check
 sed -i 's/BINARIES=()/BINARIES=(btrfs)/g' /etc/mkinitcpio.conf
