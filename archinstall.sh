@@ -60,8 +60,8 @@ sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 reflector -c "India" -p https -a 4 --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Syy
 
-# BASE LINUX PACKAGES
-pacstrap -K /mnt base linux linux-firmware intel-ucode amd-ucode sof-firmware linux-firmware-marvell xorg-server xorg-xinit btrfs-progs e2fsprogs networkmanager cups base-devel linux-headers man nano vim git openssh pacman-contrib
+# BASE LINUX PACKAGES - amd-ucode if using amd processor
+pacstrap -K /mnt base linux linux-firmware intel-ucode sof-firmware linux-firmware-marvell xorg-server xorg-xinit btrfs-progs e2fsprogs networkmanager cups base-devel linux-headers man nano vim git openssh pacman-contrib
 
 # Generating FSTAB
 genfstab -U /mnt >> /mnt/etc/fstab
