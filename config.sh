@@ -26,7 +26,7 @@ echo -e "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | tee -a /et
 pacman -Syy
 
 # Other Packages
-pacman --noconfirm -S grub efibootmgr grub-btrfs wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire bluez bluez-utils bash-completion openssh thermald firewalld plocate
+pacman --noconfirm -S grub efibootmgr grub-btrfs wireplumber pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack gst-plugin-pipewire bluez bluez-utils openssh thermald firewalld plocate
 
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
