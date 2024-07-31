@@ -14,3 +14,5 @@ systemctl enable cups.socket
 systemctl enable avahi-daemon.socket
 
 sleep 2
+
+# nodejs npm jdk-openjdk docker docker-compose go visual-studio-code-bin postman-bin spotify discord google-chronme intellij-idea-ultimate-edition
